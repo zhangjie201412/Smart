@@ -1,6 +1,6 @@
 include config.mk
 
-DIRS=lightserver modules tests
+DIRS=lightserver modules common tests
 
 .PHONY : all clean
 

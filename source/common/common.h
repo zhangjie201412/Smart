@@ -2,6 +2,8 @@
 #define __COMMON_H__
 
 #include <stdint.h>
+#include <vector>
+#include <string>
 
 #ifdef USE_SYSLOG
 #include <syslog.h>
@@ -20,5 +22,7 @@ typedef struct {
     int length;
     uint8_t payload[0];
 } RawPackage;
+
+void split_str(std::string& s, std::vector<std::string>& v, const std::string& c);
 
 #endif

@@ -17,7 +17,7 @@ lightservertest : lightservertest.o ../lightserver/LightServer.o
 lightservertest.o: lightservertest.cpp
 	$(CXX) -c $^ -o $@ $(CFLAGS)
 
-firemantest : firemantest.o ../modules/Fireman.o ../lightserver/LightServer.o
+firemantest : firemantest.o ../modules/Fireman.o ../lightserver/LightServer.o ../common/common.o
 	${CXX} $^ -o $@ $(LDFLAGS)
 
 firemantest.o: firemantest.cpp

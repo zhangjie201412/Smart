@@ -17,8 +17,8 @@
 
 #include "common.h"
 
-#define LOCAL_IP        "192.168.3.95"
-#define LOCAL_PORT      8989
+//#define LOCAL_IP        "192.168.3.95"
+//#define LOCAL_PORT      8989
 
 #define MAXEVENTS       4096
 #define MAX_LISTENER    2048
@@ -30,6 +30,7 @@ LightServer::LightServer()
 {
     mSockFds.clear();
     mCallbacks.clear();
+    ::memset(mServAddr, 0x00, 64);
 }
 
 LightServer::~LightServer()
@@ -61,14 +62,14 @@ void *LightServer::serverThread(void *ptr)
     struct sockaddr_in local_addr;
     ::memset(&local_addr, 0, sizeof(local_addr));
     local_addr.sin_family = AF_INET;
-    local_addr.sin_addr.s_addr = inet_addr(LOCAL_IP);
+    local_addr.sin_addr.s_addr = inet_addr(self->mServAddr);
     local_addr.sin_port = htons(self->mPort);
 
     rc = ::bind(sock_id, (struct sockaddr *)&local_addr,
             sizeof(struct sockaddr));
     if(rc < 0) {
         LOGE("%s: bind %s:%d failed: %s\n", __func__,
-                LOCAL_IP, LOCAL_PORT, ::strerror(errno));
+                self->mServAddr, self->mPort, ::strerror(errno));
         ::close(sock_id);
         return NULL;
     }
@@ -80,7 +81,7 @@ void *LightServer::serverThread(void *ptr)
     rc = ::listen(sock_id, MAX_LISTENER);
     if(rc < 0) {
         LOGE("%s: listen %s:%d failed\n", __func__,
-                LOCAL_IP, LOCAL_PORT);
+                self->mServAddr, self->mPort);
         ::close(sock_id);
         return NULL;
     }
@@ -155,9 +156,9 @@ void *LightServer::serverThread(void *ptr)
                 int fd = events[i].data.fd;
                 int bytes = ::read(fd, recv, MAX_SIZE);
                 if(bytes < 0) {
-                    LOGE("%s: failed to read bytes: %s\n", __func__, ::strerror);
+                    LOGE("%s: failed to read bytes: %s\n", __func__, ::strerror(errno));
                     continue;
-                } else if(bytese == 0) {
+                } else if(bytes == 0) {
                     LOGD("%s: maybe remote client closed\n", __func__);
                     int idx = 0;
                     for(int j = 0; j < self->mSockFds.size(); i++) {
@@ -215,9 +216,10 @@ int LightServer::makeNoneBlock(int fd)
     return 0;
 }
 
-bool LightServer::setup(int port)
+bool LightServer::setup(const char *addr, int port)
 {
     mPort = port;
+    ::strcpy(mServAddr, addr);
     int ret = ::pthread_create(&mServerThread, NULL, LightServer::serverThread, this);
     if(ret < 0) {
         LOGE("%s: failed to create core thread\n", __func__);

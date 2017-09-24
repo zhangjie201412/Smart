@@ -24,7 +24,7 @@ public:
     LightServer();
     virtual ~LightServer();
 
-    bool setup(int port);
+    bool setup(const char *addr, int port);
     int makeNoneBlock(int fd);
     void registerCallback(void *ptr, RawPackageCallback callback);
     void hello();
@@ -34,6 +34,7 @@ private:
     std::vector<int> mSockFds;
     std::vector<CallbackData *> mCallbacks;
     int mPort;
+    char mServAddr[64];
 };
 };
 

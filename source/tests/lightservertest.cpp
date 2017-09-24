@@ -15,7 +15,7 @@ int main(void)
     char name[4] = "ID";
     LightServer *server = new LightServer();
     server->registerCallback((void *)name, data_callback);
-    server->setup(8989);
+    server->setup("127.0.0.1", 8989);
 
     while(true) {
         ::usleep(1000 * 10000);

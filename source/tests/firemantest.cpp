@@ -9,7 +9,7 @@ int main(void)
 {
     LightServer *server = new LightServer();
     Fireman *fire = new Fireman(server);
-    server->setup(8989);
+    server->setup("127.0.0.1", 8989);
 
     while(true) {
         ::usleep(1000 * 10000);
