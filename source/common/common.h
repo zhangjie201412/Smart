@@ -17,6 +17,31 @@
 #define LOGD(format, ...)       printf(format, ## __VA_ARGS__)
 #endif
 
+#define LOCAL_IP                "192.168.3.95"
+
+#define LOCAL_PORT              8989
+#define FIREMAN_PORT            8001
+
+#define KEY_DEVICE              "device"
+#define KEY_CONTENT             "content"
+#define KEY_DATA_TYPE           "type"
+#define KEY_NAME                "name"
+#define KEY_TYPE                "type"
+#define KEY_UNIT                "unit"
+#define KEY_VALUE               "value"
+#define KEY_SIZE                "size"
+#define KEY_TIMESTAMP           "time"
+
+#define TYPE_REALTIME           "R"
+
+#define SENSOR_DATA_TYPE_INT        "int"
+#define SENSOR_DATA_TYPE_FLOAT      "float"
+#define SENSOR_DATA_TYPE_FLOAT_ARR  "float[]"
+
+#define FIREMAN_SENSOR_NAME     "fireman"
+#define FIREMAN_SENSOR_UNIT     "KPa"
+
+
 typedef struct {
     int id;
     int length;

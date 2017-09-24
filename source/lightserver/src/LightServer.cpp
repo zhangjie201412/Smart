@@ -236,6 +236,37 @@ void LightServer::registerCallback(void *ptr, RawPackageCallback callback)
     mCallbacks.push_back(data);
 }
 
+void LightServer::send(char *buf, int size)
+{
+    for(int i = 0; i < mSockFds.size(); i++) {
+        if(mSockFds[i] > 0) {
+            write(mSockFds[i], buf, size);
+        }
+    }    
+}
+
+void LightServer::sendToLocalClient(char *buf, int size)
+{
+    uint8_t checksum = 0x00;
+    char *sendBuf = (char *)::malloc(size + 5);
+
+    SendData *data = new SendData;
+    data->head[0] = 0x55;
+    data->head[1] = 0x55;
+    data->length = size;
+    data->buffer = (uint8_t *)::malloc(size);
+    ::memcpy(data->buffer, buf, size);
+
+    for(int i = 0; i < size; i++) {
+        checksum += buf[i];
+    }
+    data->checksum = checksum;
+    ::memcpy(sendBuf, data, size + 5);
+    send(sendBuf, size + 5);
+    ::free(data);
+    ::free(sendBuf);
+}
+
 void LightServer::hello()
 {
 }

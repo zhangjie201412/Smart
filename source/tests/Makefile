@@ -1,7 +1,7 @@
 include ../config.mk
 
 TEST_CFLAGS = -I../common/ -I../lightserver/inc/ -I../modules/firecontrol/
-TEST_LDFLAGS = -lpthread
+TEST_LDFLAGS = -lpthread -ljsoncpp
 
 CFLAGS=-ggdb $(TEST_CFLAGS)
 

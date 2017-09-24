@@ -3,6 +3,8 @@
 
 #include "common.h"
 #include <time.h>
+#include <pthread.h>
+#include "LightServer.h"
 
 namespace smart {
 
@@ -18,14 +20,22 @@ typedef struct {
 } FireSensor;
 
 public:
-    Fireman(LightServer *server);
+    Fireman(LightServer *localServer);
     ~Fireman();
+    bool start();
 
 private:
     static bool dataAvailableCallback(void *ptr, RawPackage *pkg);
+    static void *outThread(void *ptr);
     void parse(Fireman *self, RawPackage *pkg);
+    void makeOutString(FireSensor *data);
+
     LightServer *m_pServer;
+    LightServer *m_pLocalServer;
     std::vector<FireSensor *> mSensorVector;
+    pthread_t mOutThread;
+    pthread_mutex_t mMutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_cond_t mCond = PTHREAD_COND_INITIALIZER;
 };
 };
 

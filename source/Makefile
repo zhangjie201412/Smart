@@ -1,6 +1,6 @@
 include config.mk
 
-DIRS=lightserver modules common tests
+DIRS=lightserver modules common tests sensorhub
 
 .PHONY : all clean
 
