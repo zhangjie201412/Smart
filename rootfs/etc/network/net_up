@@ -1,0 +1,2 @@
+echo 1 > /sys/devices/platform/gprs_power.0/led_lan
+source /etc/ifconfig-eth0

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登陆</title>
+
+    <link rel="stylesheet" href="./layui/css/layui.css">
+</head>
+<body>
+    <form>
+        <div class="layui-form" style="text-align:center;">
+            <div style="height:250px">
+
+            </div>
+            <div class="layui-form-item" style="padding:20px;width:100%;text-align:center">
+                <label class="layui-form-label" style="width:200px;padding-left:500px">账号</label>
+                <div class="layui-input-inline" style="width:300px">
+                    <input type="text" id="name" name="" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item" style="padding:20px;width:100%;text-align:center">
+                <label class="layui-form-label" style="width:200px;padding-left:500px;">密码</label>
+                <div class="layui-input-inline" style="width:300px">
+                    <input type="password" id="pasw" lay-verify="required" name="" placeholder="请输入密码" autocomplete="off" class="layui-input">
+
+                    <div style="padding-top:30px">
+                        <a lay-submit lay-filter="doLogin" class="layui-btn">登入</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height:100px">
+
+            </div>
+        </div>
+
+    </form>
+
+
+    <script src="./layui/layui.js"></script>
+    <script src="./layui/jquery-1.8.2.js"></script>
+    <script>
+        layui.use(['layer', 'form'], function () {
+            var layer = layui.layer
+            , form = layui.form();
+
+            form.on('submit(doLogin)', function (data) {
+                doLogin();
+            });
+        });
+
+        function doLogin() {
+            var name = $('#name').val();
+            var pasw = $('#pasw').val();
+            var data1 = 'name=' + name + '&pasw=' + pasw;
+            //alert(data1);
+            //layer.msg('登陆密码错误');
+            $.ajax({
+                type: "get",
+                url: '../cgi-bin/parse.cgi?' + data1,
+                data: {},
+                success: function (data) {
+                    //alert('返回来的数据是:' + data);
+                    if (data != '{}') {
+                        Wname = name;
+                        Wpaw = pasw;
+                        window.location.href = "./setting.html?" + name + "&" + pasw;
+                    }
+                    else {
+                        layer.msg('登陆密码错误');
+                    }
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>

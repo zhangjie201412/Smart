@@ -1,0 +1,25 @@
+#! /bin/sh
+/bin/mount -n -t ramfs ramfs /var
+/bin/mount -n -t ramfs ramfs /tmp
+/bin/mount -n -t sysfs none /sys
+/bin/mount -n -t ramfs none /dev
+/bin/mkdir /var/tmp
+/bin/mkdir /var/modules
+/bin/mkdir /var/run
+/bin/mkdir /var/log
+/bin/mkdir /var/empty
+/bin/mkdir /var/lock
+/bin/mkdir -p /dev/pts
+/bin/mkdir -p /dev/shm
+/bin/mount -a
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+/sbin/mdev -s
+
+/sbin/syslogd
+
+/sbin/ifconfig lo 127.0.0.1 netmask 255.0.0.0
+/sbin/ifconfig eth0 192.168.168.249
+/sbin/ifconfig eth0 netmask 255.255.255.0
+/sbin/route add default gw 192.168.168.1 eth0
+/usr/local/sbin/sshd
+

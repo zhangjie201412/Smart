@@ -1,0 +1,2 @@
+#! /bin/sh
+/usr/sbin/pppd file /etc/ppp/script/pppd-config
