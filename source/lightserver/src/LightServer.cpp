@@ -154,6 +154,7 @@ void *LightServer::serverThread(void *ptr)
             } else {
                 //data available on fd
                 int fd = events[i].data.fd;
+                ::memset(recv, 0x00, MAX_SIZE);
                 int bytes = ::read(fd, recv, MAX_SIZE);
                 if(bytes < 0) {
                     LOGE("%s: failed to read bytes: %s\n", __func__, ::strerror(errno));

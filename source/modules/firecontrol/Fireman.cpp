@@ -105,7 +105,7 @@ void Fireman::makeOutString(FireSensor *data)
 
 void Fireman::parse(Fireman *self, RawPackage *pkg)
 {
-    //LOGD("%s: %d bytes -> %s\n", __func__, pkg->length, pkg->payload);
+    LOGD("%s: %d bytes -> %s\n", __func__, pkg->length, pkg->payload);
     std::vector<std::string> sp;
     std::string line((const char *)pkg->payload);
     ::split_str(line, sp, ",");
