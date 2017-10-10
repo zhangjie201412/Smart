@@ -14,7 +14,7 @@ int main(int argc, char **argv)
     mosqpp::lib_init();
 
     Server *server = new Server("sensorhub");
-    server->init();
+    server->init(localServer);
 
     Fireman *fire = new Fireman(localServer);
     fire->start();

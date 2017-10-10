@@ -17,10 +17,10 @@
 #define LOGD(format, ...)       printf(format, ## __VA_ARGS__)
 #endif
 
-#define LOCAL_IP                "192.168.3.95"
+#define LOCAL_IP                "172.16.108.138"
 
 #define LOCAL_PORT              8989
-#define FIREMAN_PORT            8001
+#define FIREMAN_PORT            8901
 
 #define KEY_DEVICE              "device"
 #define KEY_CONTENT             "content"

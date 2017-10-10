@@ -80,24 +80,24 @@ void Fireman::makeOutString(FireSensor *data)
 {
     Json::Value root;
     Json::Value contents;
-    Json::Value value;
-    Json::Value valArr;
+    char name[32];
 
+    ::memset(name, 0x00, 32);
     root[KEY_DEVICE] = data->id;
     root[KEY_DATA_TYPE] = TYPE_REALTIME;
 
     for(int i = 0; i < data->size; i++) {
-        valArr[i] = (double)data->val[i];
+        ::snprintf(name, 32, "P%d", i);
+        Json::Value value;
+        value[KEY_NAME] = name;
+        value[KEY_TYPE] = SENSOR_DATA_TYPE_FLOAT;
+        //value[KEY_SIZE] = data->size;
+        value[KEY_VALUE] = data->val[i];
+        value[KEY_UNIT] = FIREMAN_SENSOR_UNIT;
+        value[KEY_TIMESTAMP] = (int)data->ts;
+        contents.append(value);
     }
 
-    value[KEY_NAME] = FIREMAN_SENSOR_NAME;
-    value[KEY_TYPE] = SENSOR_DATA_TYPE_FLOAT_ARR;
-    value[KEY_SIZE] = data->size;
-    value[KEY_VALUE] = valArr;
-    value[KEY_UNIT] = FIREMAN_SENSOR_UNIT;
-    value[KEY_TIMESTAMP] = (int)data->ts;
-
-    contents.append(value);
     root[KEY_CONTENT] = contents;
     m_pLocalServer->sendToLocalClient((char *)root.toStyledString().c_str(),
             root.toStyledString().size());

@@ -248,6 +248,7 @@ void LightServer::send(char *buf, int size)
 
 void LightServer::sendToLocalClient(char *buf, int size)
 {
+#if 0
     uint8_t checksum = 0x00;
     char *sendBuf = (char *)::malloc(size + 5);
 
@@ -266,6 +267,9 @@ void LightServer::sendToLocalClient(char *buf, int size)
     send(sendBuf, size + 5);
     ::free(data);
     ::free(sendBuf);
+#endif
+    send(buf, size);
+    send(";", 1);
 }
 
 void LightServer::hello()

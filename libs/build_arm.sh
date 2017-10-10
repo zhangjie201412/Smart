@@ -36,6 +36,6 @@ mkdir target/arm/sbin
 cp mosquitto-1.4.14-arm/src/mosquitto target/arm/sbin/
 cp mosquitto-1.4.14-arm/client/mosquitto_pub target/arm/bin/
 cp mosquitto-1.4.14-arm/client/mosquitto_sub target/arm/bin/
-cp mosquitto-1.4.14/lib/libmosquitto.so.1 target/arm/lib/
-cp mosquitto-1.4.14/lib/cpp/libmosquittopp.so.1 target/arm/lib/
+cp mosquitto-1.4.14-arm/lib/libmosquitto.so.1 target/arm/lib/
+cp mosquitto-1.4.14-arm/lib/cpp/libmosquittopp.so.1 target/arm/lib/
 

@@ -1,7 +1,7 @@
-/dev/ttyUSB3
+/dev/ttyS4
 115200
 persist
-crtscts
+nocrtscts
 modem
 debug
 nodetach

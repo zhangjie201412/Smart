@@ -27,8 +27,8 @@ ifeq ($(WITH_THREADING),yes)
 	LIB_LIBS:=$(LIB_LIBS) -lpthread
 	LIB_CFLAGS:=$(LIB_CFLAGS) -DWITH_THREADING
 endif
-#CC=/usr/local/arm_linux_4.8/bin/arm-linux-gcc
-#CXX=/usr/local/arm_linux_4.8/bin/arm-linux-g++
+CC=gcc
+CXX=g++
 MAKE_ALL:=smartd
 
 INSTALL?=install

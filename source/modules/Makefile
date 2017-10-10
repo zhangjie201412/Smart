@@ -1,6 +1,7 @@
 include ../config.mk
 
-MODULE_CFLAGS = -I../common/ -I../lightserver/inc/ -Ifirecontrol/
+MODULE_CFLAGS = -I../common/ -I../lightserver/inc/ -Ifirecontrol/ \
+				-I/home/jay/Projects/Smart/libs/target/x86/include
 MODULE_LDFLAGS = -lpthread
 
 CFLAGS=-ggdb $(MODULE_CFLAGS)

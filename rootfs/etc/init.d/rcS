@@ -17,9 +17,10 @@ echo /sbin/mdev > /proc/sys/kernel/hotplug
 
 /sbin/syslogd
 
-/sbin/ifconfig lo 127.0.0.1 netmask 255.0.0.0
-/sbin/ifconfig eth0 192.168.168.249
-/sbin/ifconfig eth0 netmask 255.255.255.0
-/sbin/route add default gw 192.168.168.1 eth0
+#/sbin/ifconfig lo 127.0.0.1 netmask 255.0.0.0
+#/sbin/ifconfig eth0 192.168.168.249
+#/sbin/ifconfig eth0 netmask 255.255.255.0
+#/sbin/route add default gw 192.168.168.1 eth0
+/sbin/ifconfig eth0 down
 /usr/local/sbin/sshd
 

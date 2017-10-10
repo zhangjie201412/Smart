@@ -1,6 +1,8 @@
 include ../config.mk
 
-SERVER_CFLAGS = -I../common/ -I../server/inc/ \
+SERVER_CFLAGS = -I../common/ \
+				-I../server/inc/ \
+				-I../lightserver/inc/ \
 				-I/home/jay/Projects/Smart/libs/target/$(TARGET)/include
 SERVER_LDFLAGS = -lpthread
 

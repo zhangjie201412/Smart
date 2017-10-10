@@ -13,9 +13,16 @@
 
 #define RF_RESET_PIN        NUC970_PG5
 
+#define SIM800_PWR_EN       NUC970_PD14
+#define SIM800_PWR_KEY      NUC970_PD12
+
 static int gprs_powerup(void)
 {
     pr_info("%s: E\n", __func__);
+    gpio_set_value(SIM800_PWR_EN, 1);
+    gpio_set_value(SIM800_PWR_KEY, 1);
+    msleep(1000);
+    gpio_set_value(SIM800_PWR_KEY, 0);
     pr_info("%s: X\n", __func__);
 
     return 0;
@@ -23,6 +30,9 @@ static int gprs_powerup(void)
 
 static void gprs_powerdown(void)
 {
+    pr_info("%s: E\n", __func__);
+    gpio_set_value(SIM800_PWR_EN, 0);
+    pr_info("%s: X\n", __func__);
 }
 
 static int led_init(void)
@@ -32,15 +42,29 @@ static int led_init(void)
     ret = gpio_request(RF_RESET_PIN, "rf_reset_pin");
     if(ret) {
         pr_err("%s: failed to request rf reset pin\n", __func__);
-        return;
+        return -1;
+    }
+    ret = gpio_request(SIM800_PWR_EN, "sim800_pwren_pin");
+    if(ret) {
+        pr_err("%s: failed to request sim800 poweren pin\n", __func__);
+        return -1;
+    }
+    ret = gpio_request(SIM800_PWR_KEY, "sim800_pwrkey_pin");
+    if(ret) {
+        pr_err("%s: failed to request sim800 powerkey pin\n", __func__);
+        return -1;
     }
     gpio_direction_output(RF_RESET_PIN, 1);
+    gpio_direction_output(SIM800_PWR_EN, 0);
+    gpio_direction_output(SIM800_PWR_KEY, 0);
     return 0;
 }
 
 static void gprs_free(void)
 {
     gpio_free(RF_RESET_PIN);
+    gpio_free(SIM800_PWR_EN);
+    gpio_free(SIM800_PWR_KEY);
 }
 
 
@@ -48,6 +72,7 @@ static ssize_t gprs_power_show(struct device *dev,
         struct device_attribute *attr,
         char *buf)
 {
+
     return 0;
 }
 
@@ -184,7 +209,7 @@ static int gprs_power_probe(struct platform_device *pdev)
     int ret;
 
     pr_info("%s\n", __func__);
-    //ret = led_init();
+    ret = led_init();
     if(ret < 0) {
         pr_err("%s: failed to init led pins\n", __func__);
     } else {
